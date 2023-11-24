@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helado-appv2
+spec: 
+  replicas: 3
+  selector:
+    matchLabels:
+      app: helado
+  template:
+    metadata:
+      labels:
+        app: helado
+    spec:
+      containers:
+      - name: helado-app
+        image: alenandez/heladok8:apirest
+        ports:
+        - containerPort: 3000
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: icecream-app-service
+spec:
+  selector:
+    app: icecream
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: NodePort
+
